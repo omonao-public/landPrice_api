@@ -3,7 +3,7 @@
     <title>地名→地価変換器</title>
 </head>
 <body>
-    <input type="text" id="address" placeholder="住所">
+    <input type="text" id="address" placeholder="住所" value="埼玉県川越市">
     <button id="submit" onclick="send()">送信</button>
     <div id="result">text</div>
 </body>
@@ -11,8 +11,37 @@
 <script>
 function send()
 {
+    const adress = document.getElementById("address").value;
+    console.log(adress);
+    url = "https://xn489h3qce.execute-api.ap-northeast-1.amazonaws.com/develop?address="
+    const request = new XMLHttpRequest();
+    request.open('GET', url + adress, false);
+    request.send(null);
+    console.log(request.responseText)
+
     if (document.getElementById){
-        document.getElementById("result").innerHTML="<b>テキスト</b>の書換え";
+        // document.getElementById("result").innerHTML = unicodeUnescape(request.responseText);
+        // document.getElementById("result").innerHTML =
+        const res = JSON.parse(request.responseText);
+        document.getElementById("result").innerHTML = res[0]['city_name']
+        txt = '位置名 : 単価 : 距離 : 用途地域'
+        res.forEach(element => {
+            txt = txt + '<br>';
+            txt = txt + element['city_name'] 
+            txt = txt + ' : ' + element['price'] * 100 + '円/m2'
+            txt = txt + ' : ' + element['distance'] + 'm'       
+            txt = txt + ' : ' + element['type']
+        });
+        document.getElementById("result").innerHTML = txt
     }
 }
+function unicodeUnescape(str) 
+{
+    var result = '', strs = str.match(/\\u.{4}/ig);
+    if (!strs) return '';
+    for (var i = 0, len = strs.length; i < len; i++) {
+        result += String.fromCharCode(strs[i].replace('\\u', '0x'));
+    }
+    return result;
+};
 </script> 
