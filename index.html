@@ -21,8 +21,6 @@ function send()
     console.log(request.responseText)
 
     if (document.getElementById){
-        // document.getElementById("result").innerHTML = unicodeUnescape(request.responseText);
-        // document.getElementById("result").innerHTML =
         const res = JSON.parse(request.responseText);
         document.getElementById("result").innerHTML = res[0]['city_name']
         txt = '位置名 : 単価 : 距離 : 用途地域'
@@ -35,14 +33,5 @@ function send()
         });
         document.getElementById("result").innerHTML = txt
     }
-}
-function unicodeUnescape(str) 
-{
-    var result = '', strs = str.match(/\\u.{4}/ig);
-    if (!strs) return '';
-    for (var i = 0, len = strs.length; i < len; i++) {
-        result += String.fromCharCode(strs[i].replace('\\u', '0x'));
-    }
-    return result;
 };
 </script> 
