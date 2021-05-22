@@ -27,7 +27,7 @@ function send()
         res.forEach(element => {
             txt = txt + '<br>';
             txt = txt + element['city_name'] 
-            txt = txt + ' : ' + element['price'] * 100 + '円/m2'
+            txt = txt + ' : ' + element['price']+ '千円/m2'
             txt = txt + ' : ' + element['distance'] + 'm'       
             txt = txt + ' : ' + element['type']
         });
